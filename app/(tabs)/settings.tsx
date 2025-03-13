@@ -1,29 +1,27 @@
-import { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  Switch,
-  StyleSheet,
-  Image,
-  Platform,
-} from 'react-native';
-import { router } from 'expo-router';
-import {
-  ChevronRight,
-  Bell,
-  Moon,
-  Globe,
-  Shield,
-  CircleHelp as HelpCircle,
-  LogOut,
-  Camera,
-  Upload,
-} from 'lucide-react-native';
-import * as ImagePicker from 'expo-image-picker';
 import { supabase } from '@/lib/supabase';
 import { Database } from '@/types/supabase';
+import * as ImagePicker from 'expo-image-picker';
+import { router } from 'expo-router';
+import {
+  Bell,
+  Camera,
+  ChevronRight,
+  Globe,
+  CircleHelp as HelpCircle,
+  LogOut,
+  Moon,
+  Shield
+} from 'lucide-react-native';
+import { useEffect, useState } from 'react';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Switch,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 
 type Profile = Database['public']['Tables']['profiles']['Row'];
 
@@ -180,11 +178,13 @@ export default function SettingsScreen() {
           icon: Shield,
           label: 'Privacy Settings',
           type: 'link',
+          value: 'Privacy',
         },
         {
           icon: HelpCircle,
           label: 'Help & Support',
           type: 'link',
+          value: 'Help',
         },
       ],
     },
@@ -249,7 +249,7 @@ export default function SettingsScreen() {
                   </View>
                   {item.type === 'switch' ? (
                     <Switch
-                      value={item.value}
+                      value={!!item.value}
                       onValueChange={() => {}}
                       trackColor={{ false: '#ddd', true: '#007AFF' }}
                     />
@@ -270,7 +270,7 @@ export default function SettingsScreen() {
         </View>
       ))}
 
-      <TouchableOpacity style={styles.logout} onPress={handleLogout}>
+      <TouchableOpacity style={styles.logout} onPress={handleLogout} >
         <LogOut size={20} color="#FF3B30" />
         <Text style={styles.logoutText}>Log Out</Text>
       </TouchableOpacity>
@@ -281,7 +281,14 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  logout: {},
+  logout: {
+    display:"flex",
+    flexDirection:"row",
+    gap:3,
+    alignItems:"center",
+    justifyContent:"center",
+    marginTop:20
+  },
   container: {
     flex: 1,
     backgroundColor: '#f8f9fa',

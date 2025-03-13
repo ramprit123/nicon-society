@@ -1,13 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
 import { useFrameworkReady } from '@/hooks/useFrameworkReady';
-import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { View } from 'react-native';
 import { supabase } from '@/lib/supabase';
-import { Slot, useRouter, useSegments } from 'expo-router';
-import { SplashScreen } from 'expo-router';
+import { Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold, useFonts } from '@expo-google-fonts/inter';
+import { Slot, SplashScreen, useRouter, useSegments } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect, useState } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 // Prevent the splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();
@@ -26,7 +23,8 @@ function useProtectedRoute(isAuthenticated: boolean | null) {
       router.replace('/login');
     } else if (isAuthenticated && inAuthGroup) {
       // Redirect away from the sign-in page.
-      router.replace('/');
+      if(router) return router.replace('/');
+      
     }
   }, [isAuthenticated, segments]);
 }
